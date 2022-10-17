@@ -1,6 +1,7 @@
 import type {Types, PopulatedDoc, Document} from 'mongoose';
 import {Schema, model} from 'mongoose';
 import type {User} from '../user/model';
+import type {Category} from '../category/model';
 
 /**
  * This file defines the properties stored in a Freet
@@ -14,6 +15,8 @@ export type Freet = {
   dateCreated: Date;
   content: string;
   dateModified: Date;
+  categories: [Types.ObjectId];
+  likes: [Types.ObjectId];
 };
 
 export type PopulatedFreet = {
@@ -22,6 +25,8 @@ export type PopulatedFreet = {
   dateCreated: Date;
   content: string;
   dateModified: Date;
+  categories: [Types.ObjectId];
+  likes: [Types.ObjectId];
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -49,6 +54,18 @@ const FreetSchema = new Schema<Freet>({
   dateModified: {
     type: Date,
     required: true
+  },
+  // The categories that have been assigned to the freet
+  categories: {
+    type: [Schema.Types.ObjectId],
+    required: true,
+    ref: 'Category'
+  },
+  // Users who have liked the freet
+  likes: {
+    type: [Schema.Types.ObjectId],
+    required: true,
+    ref: 'User'
   }
 });
 

@@ -313,3 +313,195 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
+
+#### `POST /api/follows` - Post a new follow
+
+**Body** _(no need to add fields that are not being changed)_
+
+- `username` _{string}_ - The user's username
+
+**Returns**
+
+- The user being followed
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` If the freetId is not valid
+- `409` If the user is already following a user they want to follow
+- `409` If the user is tries to follow themselves
+
+#### `DELETE /api/follows` - Delete a follow
+
+**Body** _(no need to add fields that are not being changed)_
+
+- `username` _{string}_ - The user's username
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` If the freetId is not valid
+- `409` If the user is already following a user they want to follow
+
+#### Initial outline for rest of RESTFUL routes
+
+#### Likes
+
+##### `POST /api/freets/:freetid/likes` - Adds a new Like
+
+**Body**
+
+- `freetid` _{Types.ObjectId | string}_ - The freet's ID
+- `userId` _{Types.ObjectId | string}_ - The user's ID
+
+**Returns**
+
+- A success message
+- An object with the updated likes of a particular freet ID
+
+**Throws**
+
+- `404` if the freet does not exist
+- `400` if the freet id or user id is in the wrong format
+- `409` if there is already a like associated with a freet from the particular user
+
+##### `DELETE /api/freets/:freetid/likes` - Deletes a Like
+
+**Body**
+
+- `freetid` _{Types.ObjectId | string}_ - The freet's ID
+- `userId` _{Types.ObjectId | string}_ - The user's ID
+
+**Returns**
+
+- A success message
+- An object with the updated likes of a particular freet ID
+
+**Throws**
+
+- `404` if the freet does not exist
+- `400` if the freet id or user id is in the wrong format
+- `409` if there is no like associated with a freet from the particular user
+
+#### Categorizing Freets
+
+##### `GET /api/categories` - Get all the categories
+
+**Returns**
+
+- An array of all the categories
+
+#### `GET /api/categories?category=CATEGORYNAME` - Get freets in a specific category
+
+**Returns**
+
+- An array of freets belonging to a specific category
+
+**Throws**
+
+- `400` if `category` is not given
+- `404` if `category` is not a recognized category
+
+#### `POST /api/categories` - Create a new freet
+
+**Body**
+
+- `name` _{string}_ - The name of a category
+
+**Returns**
+
+- A success message
+- A object with the created category
+
+**Throws**
+
+- `400` If the category content is empty or a stream of empty spaces
+- `400` If the category content is more than 140 characters long
+
+#### `DELETE /api/categories/:categoryname` - Delete an existing category
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `409` if the user is not the creator of a category
+- `404` if the category name does not exist
+
+#### `PUT /api/categories/:categoryname` - Update an existing category
+
+**Body**
+
+- `name` _{string}_ - The new name of the category
+
+**Returns**
+
+- A success message
+- An object with the updated category
+
+**Throws**
+
+- `404` if the category does not exist
+- `409` if the user is not the creator of the category
+- `400` if the new category name is empty or a stream of empty spaces
+- `400` if the new category name is more than 140 characters long
+
+#### `PUT /api/categories/:categoryname/:freetId` - Add a freet to a category
+
+**Returns**
+
+- A success message
+- An object with the updated category
+
+**Throws**
+
+- `404` if the category does not exist
+- `404` if the user is not the creator of the category
+- `409` if the freet already belongs to the category
+
+#### `DELETE /api/categories/:categoryname/:freetId` - Remove a freet from a category
+
+**Returns**
+
+- A success message
+- An object with the updated category
+
+**Throws**
+
+- `404` if the date does not exist
+- `403` if the user is not the creator of the category
+- `409` if the freet does not belong to the category
+
+#### Insights
+
+#### `GET /api/insights/:date` - Get logs for a specific date in database
+
+**Returns**
+
+- An array of insight logs for a specific date
+
+**Throws**
+
+- `404` if the date does not exist
+- `400` if the date is in the wrong format
+
+##### `POST /api/insights` - Adds a new insight log
+
+**Body**
+
+- `userId`_{Types.ObjectId | String}_ - The ID of the user
+- `currentTime` _{Date}_ - The time the log began
+- `endTime` _{Date}_ - The time the log ended
+- `totalTime`_{Date}_ - The difference between endTime - currentTime
+
+**Returns**
+
+- A success message
+- An object with the updated likes of a particular freet ID
+
+
