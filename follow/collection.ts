@@ -1,7 +1,6 @@
 import type {HydratedDocument, Types} from 'mongoose';
 import type {Follow} from './model';
 import FollowModel from './model';
-import UserCollection from '../user/collection';
 
 /**
  * Contains the functionality to explore the follows stored in MongoDB

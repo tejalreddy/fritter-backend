@@ -8,6 +8,7 @@
   <script src="/scripts/freet.js"></script>
   <script src="/scripts/user.js"></script>
   <script src="/scripts/follow.js"></script>
+  <script src="/scripts/category.js"></script>
   <script src="/scripts/index.js"></script>
 </head>
 
@@ -86,6 +87,77 @@
             <input id="author" name="author">
           </div>
           <input type="submit" value="View Freets By Author">
+        </form>
+
+        <form id="create-category">
+          <h3>Create a category</h3>
+          <div>
+            <label for="name">Category Name:</label>
+            <input id="name" name="name"></input>
+          </div>
+          <input type="submit" value="Create Category">
+        </form>
+
+        <form id="update-category">
+          <h3>Update a category name</h3>
+          <div>
+            <label for="categoryName">Previous Category Name:</label>
+            <input id="categoryName" name="categoryName"></input>
+          </div>
+          <div>
+            <label for="name">New Category Name:</label>
+            <input id="name" name="name"></input>
+          </div>
+          <input type="submit" value="Update Category">
+        </form>
+
+        <form id="delete-category">
+          <h3>Delete a category</h3>
+          <div>
+            <label for="categoryName">Category Name:</label>
+            <input id="categoryName" name="categoryName"></input>
+          </div>
+          <input type="submit" value="Delete Category">
+        </form>
+
+        <form id="view-all-categories">
+          <h3>View All Categories</h3>
+          <input type="submit" value="View All Categories">
+        </form>
+
+        <form id="view-freets-in-category">
+          <h3>View freets in a category</h3>
+          <div>
+            <label for="categoryName">Category Name:</label>
+            <input id="categoryName" name="categoryName"></input>
+          </div>
+          <input type="submit" value="View Freets">
+        </form>
+        
+        <form id="add-category-freet">
+          <h3>Add freet to a category</h3>
+          <div>
+            <label for="categoryName">Category Name:</label>
+            <input id="categoryName" name="categoryName"></input>
+          </div>
+          <div>
+            <label for="freetId">FreetID:</label>
+            <input id="freetId" name="freetId"></input>
+          </div>
+          <input type="submit" value="Add Freet">
+        </form>
+        
+        <form id="delete-category-freet">
+          <h3>Remove freet from a category</h3>
+          <div>
+            <label for="categoryName">Category Name:</label>
+            <input id="categoryName" name="categoryName"></input>
+          </div>
+          <div>
+            <label for="freetId">FreetID:</label>
+            <input id="freetId" name="freetId"></input>
+          </div>
+          <input type="submit" value="Delete Freet">
         </form>
 
         <form id="create-freet">

@@ -9,6 +9,7 @@ export type Category = {
   _id: Types.ObjectId; // MongoDB automatically generates ID
   name: string;
   userId: Types.ObjectId;
+  freets: Types.ObjectId[];
 };
 
 // Mongoose schema definition
@@ -23,6 +24,11 @@ const CategorySchema = new Schema<Category>({
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'User'
+  },
+  freets: {
+    type: [Schema.Types.ObjectId],
+    required: true,
+    ref: 'Freet'
   }
 });
 

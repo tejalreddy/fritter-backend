@@ -54,20 +54,18 @@ const FreetSchema = new Schema<Freet>({
   dateModified: {
     type: Date,
     required: true
-  },
-  // The categories that have been assigned to the freet
-  categories: {
-    type: [Schema.Types.ObjectId],
-    required: true,
-    ref: 'Category'
-  },
-  // Users who have liked the freet
-  likes: {
-    type: [Schema.Types.ObjectId],
-    required: true,
-    ref: 'User'
   }
 });
 
+// (virtual-population)
+// Auto-populate a Category.freets field
+FreetSchema.virtual('categories', {
+  ref: 'Category',
+  localField: '_id',
+  foreignField: 'freets'
+});
+
+FreetSchema.set('toObject', {virtuals: true});
+FreetSchema.set('toJSON', {virtuals: true});
 const FreetModel = model<Freet>('Freet', FreetSchema);
 export default FreetModel;

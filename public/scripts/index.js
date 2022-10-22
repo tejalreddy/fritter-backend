@@ -40,11 +40,19 @@ const formsAndHandlers = {
   'edit-freet': editFreet,
   'delete-freet': deleteFreet,
   'follow-user': followUser,
-  'unfollow-user': unfollowUser
+  'unfollow-user': unfollowUser,
+  'create-category': createCategory,
+  'update-category': updateCategory,
+  'delete-category': deleteCategory,
+  'add-category-freet': addCategoryFreet,
+  'delete-category-freet': deleteCategoryFreet,
+  'view-all-categories': viewAllCategories,
+  'view-freets-in-category': viewFreetsInCategory
 };
 
 // Attach handlers to forms
 function init() {
+  // START COUNTING TIME HERE IN A LOCAL STATE VARIABLE
   Object.entries(formsAndHandlers).forEach(([formID, handler]) => {
     const form = document.getElementById(formID);
     form.onsubmit = e => {
@@ -56,5 +64,10 @@ function init() {
   });
 }
 
+// function leave() {
+//   // CAN I INPUT DATA INTO MY MODELS FROM HERE??
+// }
+
 // Attach handlers once DOM is ready
 window.onload = init;
+// window.onunload = leave;

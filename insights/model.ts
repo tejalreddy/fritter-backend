@@ -11,7 +11,7 @@ export type Insights = {
   userId: Types.ObjectId;
   beginTime: Date;
   endTime: Date;
-  totalTime: Date;
+  totalTime: number;
 };
 
 // Mongoose schema definitionfor interfacing with a MongoDB table
@@ -34,7 +34,7 @@ const InsightsSchema = new Schema<Insights>({
   },
   // The total time the user has been using the platform for the current day
   totalTime: {
-    type: Date,
+    type: Number,
     required: true
   }
 });
