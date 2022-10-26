@@ -50,8 +50,9 @@ const formsAndHandlers = {
   'view-freets-in-category': viewFreetsInCategory,
   'input-insights': inputInsights,
   'view-all-insights': getInsights,
-  'view-insights-for-date': getInsightsForDate
-
+  'view-insights-for-date': getInsightsForDate,
+  'like-freet': likeFreet,
+  'unlike-freet': unlikeFreet
 };
 
 // Attach handlers to forms
@@ -68,10 +69,5 @@ function init() {
   });
 }
 
-// function leave() {
-//   // CAN I INPUT DATA INTO MY MODELS FROM HERE??
-// }
-
 // Attach handlers once DOM is ready
 window.onload = init;
-// window.onunload = leave;

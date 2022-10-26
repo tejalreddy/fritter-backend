@@ -26,16 +26,12 @@ class InsightsCollection {
         if (totalTime <= currentTime.getTime() - startOfDay.getTime()) {
             // if there is already a log for the day
             if (insightLog.length > 0) {
-                console.log('same day, log already made');
-                console.log(currentTime.toLocaleString().split(',')[0]);
                 const recentLog = insightLog[0];
                 recentLog.totalTime += totalTime;
                 await recentLog.save();
                 logsUpserted.push(recentLog);
             // if there is not already a log for the day then create a new log
             } else {
-                console.log('same day, log not made');
-                console.log(currentTime.toLocaleString().split(',')[0]);
                 const insights = new InsightsModel({userId, date: currentTime.toLocaleString().split(',')[0], totalTime});
                 await insights.save();
                 logsUpserted.push(insights);
@@ -57,7 +53,6 @@ class InsightsCollection {
             // if there is not already a log for the day then create a new log
             } else {
                 const insights = new InsightsModel({userId, date: previousDate.toLocaleString().split(',')[0], totalTime: previousTotalTime});
-                console.log(insights);
                 await insights.save();
                 logsUpserted.push(insights);
             }

@@ -42,6 +42,7 @@ class FreetCollection {
     const freet = await FreetModel.findOne({_id: freetId});
     await freet.populate('authorId');
     await freet.populate('categories');
+    await freet.populate('numLikes');
     await freet.save();
     return freet;
   }
@@ -54,7 +55,7 @@ class FreetCollection {
   static async findAll(): Promise<Array<HydratedDocument<Freet>>> {
     // Retrieves freets and sorts them from most to least recent
     const freets = await FreetModel.find({}).sort({dateModified: -1});
-    const newFreets = Promise.all(freets.map(async freet => (await (await freet.populate('categories')).populate('authorId')).save()));
+    const newFreets = Promise.all(freets.map(async freet => (await (await (await freet.populate('categories')).populate('numLikes')).populate('authorId')).save()));
     return newFreets;
   }
 
@@ -67,7 +68,7 @@ class FreetCollection {
   static async findAllByUsername(username: string): Promise<Array<HydratedDocument<Freet>>> {
     const author = await UserCollection.findOneByUsername(username);
     const freets = await FreetModel.find({authorId: author._id});
-    const newFreets = Promise.all(freets.map(async freet => (await (await freet.populate('categories')).populate('authorId')).save()));
+    const newFreets = Promise.all(freets.map(async freet => (await (await (await freet.populate('categories')).populate('numLikes')).populate('authorId')).save()));
     return newFreets;
   }
 
@@ -83,6 +84,7 @@ class FreetCollection {
     freet.content = content;
     freet.dateModified = new Date();
     await freet.populate('categories');
+    await freet.populate('numLikes');
     await freet.save();
     return freet.populate('authorId');
   }

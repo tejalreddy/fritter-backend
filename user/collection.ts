@@ -37,6 +37,7 @@ class UserCollection {
     if (user) {
       await user.populate('following');
       await user.populate('followers');
+      await user.populate('likes');
     }
 
     return user;
@@ -53,6 +54,7 @@ class UserCollection {
     if (user) {
       await user.populate('following');
       await user.populate('followers');
+      await user.populate('likes');
     }
 
     return user;
@@ -73,6 +75,7 @@ class UserCollection {
     if (user) {
       await user.populate('following');
       await user.populate('followers');
+      await user.populate('likes');
     }
 
     return user;
@@ -98,6 +101,7 @@ class UserCollection {
     if (user) {
       await user.populate('following');
       await user.populate('followers');
+      await user.populate('likes');
     }
 
     return user;

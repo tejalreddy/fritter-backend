@@ -16,7 +16,7 @@ export type Freet = {
   content: string;
   dateModified: Date;
   categories: [Types.ObjectId];
-  likes: [Types.ObjectId];
+  numLikes?: [Types.ObjectId];
 };
 
 export type PopulatedFreet = {
@@ -26,7 +26,7 @@ export type PopulatedFreet = {
   content: string;
   dateModified: Date;
   categories: [Types.ObjectId];
-  likes: [Types.ObjectId];
+  numLikes?: [Types.ObjectId];
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -63,6 +63,15 @@ FreetSchema.virtual('categories', {
   ref: 'Category',
   localField: '_id',
   foreignField: 'freets'
+});
+
+// (virtual-population)
+// Auto-populate a Category.numLikes field where it counts the number of likes a freet has
+FreetSchema.virtual('numLikes', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'freetId',
+  count: true
 });
 
 FreetSchema.set('toObject', {virtuals: true});

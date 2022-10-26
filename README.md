@@ -493,6 +493,31 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` - if the date format is not valid
 - `404` - If the date does not exist in the user's insights
 
+#### `POST /api/likes` - Creates a new like object
+
+**Returns**
+
+- A success message
+- The like object
+
+**Throws**
+
+- `403` - if user is not logged in
+- `404` - if the freet does not exist
+- `409` - If the like already exists
+
+#### `DELETE /api/likes` - Delete a like object
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` - if user is not logged in
+- `404` - if the freet does not exist
+- `409` - If the user has not liked the particular freet
+
 
 
 

@@ -12,9 +12,9 @@ export type User = {
   username: string;
   password: string;
   dateJoined: Date;
-  picture: Buffer;
   following?: Types.ObjectId[];
   followers?: Types.ObjectId[];
+  likes?: Types.ObjectId[];
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -35,10 +35,6 @@ const UserSchema = new Schema({
   dateJoined: {
     type: Date,
     required: true
-  },
-  picture: {
-    data: Buffer,
-    contentType: String
   }
 });
 
@@ -56,6 +52,14 @@ UserSchema.virtual('followers', {
   ref: 'Follow',
   localField: '_id',
   foreignField: 'followedId'
+});
+
+// (virtual-population)
+// Auto-populate a User.likes with any followings where User._id == Like.userId
+UserSchema.virtual('likes', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'userId'
 });
 
 UserSchema.set('toObject', {getters: true});
