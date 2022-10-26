@@ -9,6 +9,7 @@
   <script src="/scripts/user.js"></script>
   <script src="/scripts/follow.js"></script>
   <script src="/scripts/category.js"></script>
+  <script src="/scripts/insights.js"></script>
   <script src="/scripts/index.js"></script>
 </head>
 
@@ -207,6 +208,29 @@
             <input id="username" name="username"></input>
           </div>
           <input type="submit" value="Unfollow User">
+        </form>
+
+        <form id="input-insights">
+          <h3>Input time spent on platform in milliseconds</h3>
+          <div>
+            <label for="totalTime">Total time:</label>
+            <input id="totalTime" name="totalTime"></input>
+          </div>
+          <input type="submit" value="Input Time">
+        </form>
+
+        <form id="view-all-insights">
+          <h3>View all platform insights</h3>
+          <input type="submit" value="View Insights">
+        </form>
+
+        <form id="view-insights-for-date">
+          <h3>View platform insight for a particular day (in format YYYY-MM-DD)</h3>
+          <div>
+            <label for="date">Date:</label>
+            <input id="date" name="date"></input>
+          </div>
+          <input type="submit" value="View Insight">
         </form>
         
       </div>

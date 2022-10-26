@@ -13,6 +13,7 @@ import {userRouter} from '../user/router';
 import {freetRouter} from '../freet/router';
 import {followRouter} from '../follow/router';
 import {categoryRouter} from '../category/router';
+import {insightsRouter} from '../insights/router';
 
 // Load environmental variables
 dotenv.config({});
@@ -80,6 +81,7 @@ app.use('/api/users', userRouter);
 app.use('/api/follows', followRouter);
 app.use('/api/freets', freetRouter);
 app.use('/api/categories', categoryRouter);
+app.use('/api/insights', insightsRouter);
 
 // Catch all the other routes and display error message
 app.all('*', (req: Request, res: Response) => {

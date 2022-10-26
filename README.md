@@ -455,6 +455,44 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` - if the category name is not valid
 - `404` - if the category does not exist
 
+#### `PUT /api/insights` - Upsert to log time spent on the platform
+
+**Body**
+
+- `totalTime` _{string}_ - The time in milliseconds that the user spent on the platform
+
+**Returns**
+
+- An object containing all of the logs upserted
+
+**Throws**
+
+- `403` - if user is not logged in
+
+#### `GET /api/insights` - Gets the total time spent on the platform for each date
+
+**Returns**
+
+- A success message
+- All logs belonging to a user
+
+**Throws**
+
+- `403` - if user is not logged in
+
+#### `GET /api/insights/:date` - Gets the total time spent on the platform for a particular date
+
+**Returns**
+
+- A success message
+- The time spent on the platform for a particular date
+
+**Throws**
+
+- `403` - if user is not logged in
+- `400` - if the date format is not valid
+- `404` - If the date does not exist in the user's insights
+
 
 
 

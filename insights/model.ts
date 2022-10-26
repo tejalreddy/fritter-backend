@@ -9,30 +9,24 @@ import type {User} from '../user/model';
 export type Insights = {
   _id: Types.ObjectId; // MongoDB automatically generates
   userId: Types.ObjectId;
-  beginTime: Date;
-  endTime: Date;
+  date: string;
   totalTime: number;
 };
 
 // Mongoose schema definitionfor interfacing with a MongoDB table
 const InsightsSchema = new Schema<Insights>({
+  // The date of a record
+  date: {
+    type: String,
+    required: true
+  },
   // The userId
   userId: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'User'
   },
-  // The time the user starts using the platform
-  beginTime: {
-    type: Date,
-    required: true
-  },
-  // The time the user ends using the platform
-  endTime: {
-    type: Date,
-    required: false
-  },
-  // The total time the user has been using the platform for the current day
+  // The total time the user has been using the platform
   totalTime: {
     type: Number,
     required: true

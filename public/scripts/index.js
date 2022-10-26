@@ -47,7 +47,11 @@ const formsAndHandlers = {
   'add-category-freet': addCategoryFreet,
   'delete-category-freet': deleteCategoryFreet,
   'view-all-categories': viewAllCategories,
-  'view-freets-in-category': viewFreetsInCategory
+  'view-freets-in-category': viewFreetsInCategory,
+  'input-insights': inputInsights,
+  'view-all-insights': getInsights,
+  'view-insights-for-date': getInsightsForDate
+
 };
 
 // Attach handlers to forms
