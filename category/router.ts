@@ -2,7 +2,6 @@
 import type {Request, Response} from 'express';
 import express from 'express';
 import CategoryCollection from './collection';
-import FreetCollection from '../freet/collection';
 import * as userValidator from '../user/middleware';
 import * as freetValidator from '../freet/middleware';
 import * as util from './util';
@@ -43,6 +42,7 @@ router.post(
  *
  * @name PUT /api/categories/:categoryName?
  *
+ * @param {string} categoryName - the name of the category
  * @return {CategoryResponse} - The new updated category
  * @throws {403} if user is not logged in
  * @throws {400} if category name is not in the current format
@@ -71,6 +71,7 @@ router.put(
  *
  * @name DELETE /api/categories/:categoryName?
  *
+ * @param {string} categoryName - the name of the category
  * @return {boolean} - A boolean value indicating if the category was deleted
  * @throws {403} if user is not logged in
  * @throws {400} if category name is not in the current format
@@ -97,6 +98,7 @@ router.delete(
  *
  * @name POST /api/categories/:categoryName?/freets
  *
+ * @param {string} categoryName - the name of the category
  * @return {CategoryResponse} - The updated category
  * @throws {403} if user is not logged in
  * @throws {400} if category name is not in the current format
@@ -116,8 +118,8 @@ router.delete(
     async (req: Request, res: Response) => {
       const category = await CategoryCollection.addFreetToCategory(req.params.categoryName, req.body.freetId);
       res.status(200).json({
-        message: 'The freet was added to your category successfully.',
-        freet: util.constructCategoryResponse(category)
+        message: `The freet with ID ${req.body.freetId as string} was added to your category successfully.`,
+        category: util.constructCategoryResponse(category)
       });
     }
   );
@@ -127,6 +129,7 @@ router.delete(
  *
  * @name DELETE /api/categories/:categoryName?/freets
  *
+ * @param {string} categoryName - the name of the category
  * @return {CategoryResponse} - The updated category
  * @throws {403} if user is not logged in
  * @throws {400} if category name is not in the current format
@@ -146,8 +149,8 @@ router.delete(
     async (req: Request, res: Response) => {
       const category = await CategoryCollection.deleteFreetFromCategory(req.params.categoryName, req.body.freetId);
       res.status(200).json({
-        message: 'The freet was deleted from your category successfully.',
-        freet: util.constructCategoryResponse(category)
+        message: `The freet with ID ${req.body.freetId as string} was deleted from your category successfully.`,
+        category: util.constructCategoryResponse(category)
       });
     }
   );
@@ -178,6 +181,7 @@ router.get(
  *
  * @name GET /api/categories/:categoryname?/freets
  *
+ * @param {string} categoryName - the name of the category
  * @return {FreetResponse[]} - List of all the freets belonging to a specific category
  * @throws {403} if user is not logged in
  * @throws {400} if the category name is not valid

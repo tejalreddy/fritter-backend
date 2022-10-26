@@ -32,7 +32,7 @@ router.post(
         const freet = await FreetCollection.findOne(req.body.freetId);
         const like = await LikeCollection.addOne(userId, freet._id);
         res.status(201).json({
-        message: 'Your like was executed successfully.',
+        message: `Your like was executed successfully on ${req.body.freetId as string}.`,
         like: util.constructLikeResponse(like)
         });
     }
@@ -60,7 +60,7 @@ router.delete(
         const freet = await FreetCollection.findOne(req.body.freetId);
         await LikeCollection.deleteOne(userId, freet._id);
         res.status(200).json({
-        message: 'You unliked the freet successfully.'
+        message: `You unliked the freet ${req.body.freetId as string} successfully.`
         });
     }
 );

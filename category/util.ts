@@ -6,6 +6,7 @@ type CategoryResponse = {
     _id: string; // MongoDB automatically generates ID
     name: string;
     userId: string;
+    freets: string[];
 };
 
 /**
@@ -19,15 +20,12 @@ const constructCategoryResponse = (category: HydratedDocument<Category>): Catego
         })
     };
 
-    let formatedFreets: string[] = [];
-    if (categoryCopy.freets) {
-        formatedFreets = categoryCopy.freets.map(freetId => freetId.toString());
-    }
-
+    const freets = (categoryCopy.freets ?? []).map(freet => freet as unknown as string);
     return {
         ...categoryCopy,
         _id: categoryCopy._id.toString(),
-        userId: categoryCopy.userId.toString()
+        userId: categoryCopy.userId.toString(),
+        freets
     };
 };
 

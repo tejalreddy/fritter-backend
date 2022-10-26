@@ -3,7 +3,7 @@ import type {HydratedDocument, Types} from 'mongoose';
 import type {Category} from './model';
 import type {Freet} from '../freet/model';
 import CategoryModel from './model';
-import FreetModel from '../freet/model';
+import FreetCollection from '../freet/collection';
 
 /**
  * This file contains a class with functionality to interact with categories stored in MongoDB
@@ -81,7 +81,7 @@ class CategoryCollection {
      */
     static async findFreetsInCategory(categoryName: string, userId: Types.ObjectId | string): Promise<Array<HydratedDocument<Freet>>> {
         const category = await CategoryModel.findOne({categoryName, userId});
-        const freets = Promise.all(category.freets.map(async freetId => FreetModel.findById(freetId)));
+        const freets = Promise.all(category.freets.map(async freetId => FreetCollection.findOne(freetId)));
         return freets;
     }
 
@@ -93,7 +93,7 @@ class CategoryCollection {
    * @returns the updated category
    */
   static async addFreetToCategory(categoryName: string, freetId: Types.ObjectId | string): Promise<HydratedDocument<Category>> {
-    const freet = await FreetModel.findOne({_id: freetId});
+    const freet = await FreetCollection.findOne(freetId);
     const category = await CategoryCollection.findOneByUserIdAndName(categoryName, freet.authorId);
     category.freets.push(freet._id);
     await category.save();
@@ -108,7 +108,7 @@ class CategoryCollection {
    * @returns the updated category
    */
   static async deleteFreetFromCategory(categoryName: string, freetId: Types.ObjectId | string): Promise<HydratedDocument<Category>> {
-    const freet = await FreetModel.findOne({_id: freetId});
+    const freet = await FreetCollection.findOne(freetId);
     const category = await CategoryCollection.findOneByUserIdAndName(categoryName, freet.authorId);
     const index = category.freets.indexOf(freet._id);
     if (index > -1) {

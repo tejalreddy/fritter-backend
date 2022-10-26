@@ -14,7 +14,6 @@ const router = express.Router();
  *
  * @name PUT /api/insights
  *
- * @param {string} totalTime - the total time spent on the platform
  * @return {InsightsResponse[]} - an object with the logs upserted
  * @throws {403} - If user is not logged in
  */
@@ -54,6 +53,8 @@ router.get(
  *
  * @name GET /api/insights/:date
  *
+ * @param {string} date - the date requested by the user
+ *
  * @return {InsightsResponse} - an object with the insights for the selected day
  * @throws {403} - If user is not logged in
  * @throws {400} - If the date format is not valid
@@ -70,7 +71,7 @@ router.get(
         const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10));
         const insights = await InsightsCollection.findByDate(userId, date);
         res.status(200).json({
-            message: 'Time retrieved successfully',
+            message: `Insights retrieved successfully for ${req.params.date}`,
             insights: util.constructInsightsResponse(insights)
         });
     }

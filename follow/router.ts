@@ -13,9 +13,6 @@ const router = express.Router();
  *
  * @name POST /api/follows
  *
- * @param {string} followerId - The user doing the following
- * @param {string} username - The user being followed
- *
  * @return {string} - A success message
  * @throws {403} - If the user is not logged in
  * @throws {404} - If the freetId is not valid
@@ -28,6 +25,7 @@ router.post(
   [
     userValidator.isUserLoggedIn,
     userValidator.isValidUsername,
+    userValidator.isUserExists,
     followValidator.isFollowExistsForAdding,
     followValidator.isFollowingAnotherUser,
     userValidator.isUserExists
@@ -37,7 +35,7 @@ router.post(
     const followedId = await UserCollection.findOneByUsername(req.body.username);
     const follow = await FollowCollection.addOne(followerId, followedId._id);
     res.status(201).json({
-      message: 'Your follow was executed successfully.',
+      message: `Your follow of ${req.body.username as string} was executed successfully.`,
       follow: util.constructFollowResponse(follow)
     });
   }
@@ -47,10 +45,6 @@ router.post(
  * Unfollow a user
  *
  * @name DELETE /api/follows
- *
- *
- * @param {string} followerId - The user doing the following
- * @param {string} username - The user being followed
  *
  * @return {string} - A success message
  * @throws {403} - If the user is not logged in
@@ -62,6 +56,7 @@ router.delete(
   [
     userValidator.isUserLoggedIn,
     userValidator.isValidUsername,
+    userValidator.isUserExists,
     followValidator.isFollowExistsForRemoving,
     userValidator.isUserExists
   ],
@@ -70,7 +65,7 @@ router.delete(
     const followedId = await UserCollection.findOneByUsername(req.body.username);
     await FollowCollection.deleteOne(followerId, followedId._id);
     res.status(200).json({
-      message: 'You unfollowed the user successfully.'
+      message: `You unfollowed the user ${req.body.username as string} successfully.`
     });
   }
 );

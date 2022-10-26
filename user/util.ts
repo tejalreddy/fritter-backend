@@ -7,6 +7,9 @@ type UserResponse = {
   _id: string;
   username: string;
   dateJoined: string;
+  following: string[];
+  followers: string[];
+  likes: string[];
 };
 
 /**
@@ -32,10 +35,16 @@ const constructUserResponse = (user: HydratedDocument<User>): UserResponse => {
     })
   };
   delete userCopy.password;
+  const following = (userCopy.following ?? []).map(id => id as unknown as string);
+  const followers = (userCopy.followers ?? []).map(id => id as unknown as string);
+  const likes = (userCopy.likes ?? []).map(like => like as unknown as string);
   return {
     ...userCopy,
     _id: userCopy._id.toString(),
-    dateJoined: formatDate(user.dateJoined)
+    dateJoined: formatDate(user.dateJoined),
+    following,
+    followers,
+    likes
   };
 };
 

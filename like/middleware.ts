@@ -14,7 +14,7 @@ import LikeCollection from './collection';
     if (like) {
         res.status(409).json({
             error: {
-                likeFound: 'Already liked this post'
+                likeFound: `Already liked the freet with ID ${req.body.freetId as string}`
             }
         });
         return;
@@ -33,7 +33,7 @@ import LikeCollection from './collection';
     if (!like) {
         res.status(409).json({
             error: {
-                likeFound: 'Already liked this post'
+                likeNotFound: `You have not liked the freet with ID ${req.body.freetId as string}`
             }
         });
         return;

@@ -29,7 +29,7 @@ const isFreetInBodyExists = async (req: Request, res: Response, next: NextFuncti
   if (!freet) {
     res.status(404).json({
       error: {
-        freetNotFound: 'Freet with the entered freet ID does not exist.'
+        freetNotFound: `Freet with the entered freet ID ${req.body.freetId as string} does not exist.`
       }
     });
     return;

@@ -11,7 +11,7 @@ const isDateValid = async (req: Request, res: Response, next: NextFunction) => {
     if (!dateRegex.test(req.params.date)) {
         res.status(400).json({
             error: {
-                date: 'Date is not in the correct YYYY-MM-DD format.'
+                invalidFormat: 'Date is not in the correct YYYY-MM-DD format.'
             }
         });
         return;
@@ -31,7 +31,7 @@ const isDateExist = async (req: Request, res: Response, next: NextFunction) => {
     if (!insight) {
         res.status(404).json({
             error: {
-                noInsightFound: 'No insights found for selected date'
+                noInsightFound: `No insights found for ${req.params.date}`
             }
         });
         return;

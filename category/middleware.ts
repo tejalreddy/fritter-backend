@@ -48,7 +48,7 @@ const isCategoryExistForCreation = async (req: Request, res: Response, next: Nex
     if (category) {
         res.status(409).json({
             error: {
-              categoryFound: 'Category already exists.'
+              categoryFound: `Category ${req.body.name as string} already exists.`
             }
         });
         return;
@@ -67,7 +67,7 @@ const isCategoryExist = async (req: Request, res: Response, next: NextFunction) 
     if (!category) {
         res.status(404).json({
             error: {
-              categoryNotFound: 'Category does not exist.'
+              categoryNotFound: `Category ${req.params.categoryName} does not exist.`
             }
         });
         return;
@@ -83,20 +83,11 @@ const isFreetInCategoryForDeletion = async (req: Request, res: Response, next: N
     const userId = (req.session.userId as string) ?? '';
     const category = await CategoryCollection.findOneByUserIdAndName(req.params.categoryName, userId);
     const freet = await FreetCollection.findOne(req.body.freetId);
-    if (!freet) {
-        res.status(404).json({
-            error: {
-              freetNotFound: 'Freet does not exist.'
-            }
-        });
-        return;
-    }
-
     const index = category.freets.indexOf(freet._id);
     if (index <= -1) {
         res.status(404).json({
             error: {
-              freetNotFound: 'Freet not found in category.'
+              freetNotFound: `Freet with ID ${freet._id as unknown as string} not found in category.`
             }
         });
     }
@@ -111,20 +102,11 @@ const isFreetInCategoryForAddition = async (req: Request, res: Response, next: N
     const userId = (req.session.userId as string) ?? '';
     const category = await CategoryCollection.findOneByUserIdAndName(req.params.categoryName, userId);
     const freet = await FreetCollection.findOne(req.body.freetId);
-    if (!freet) {
-        res.status(404).json({
-            error: {
-              freetNotFound: 'Freet does not exist.'
-            }
-        });
-        return;
-    }
-
     const index = category.freets.indexOf(freet._id);
     if (index > -1) {
         res.status(409).json({
             error: {
-              freetNotFound: 'Freet already in category.'
+              freetFound: `Freet with ID ${freet._id as unknown as string} already in category.`
             }
         });
         return;

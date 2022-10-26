@@ -10,21 +10,11 @@ import UserCollection from '../user/collection';
 const isFollowExistsForAdding = async (req: Request, res: Response, next: NextFunction) => {
   const followerId = (req.session.userId as string) ?? '';
   const followedId = await UserCollection.findOneByUsername(req.body.username);
-
-  if (Object.is(followedId, null)) {
-    res.status(404).json({
-        error: {
-          userNotFound: 'User does not exist.'
-        }
-      });
-      return;
-  }
-
   const follow = await FollowCollection.findOneByIds(followerId, followedId._id);
   if (follow) {
     res.status(409).json({
       error: {
-        followFound: 'Already following user.'
+        followFound: `Already following user ${req.body.username as string}.`
       }
     });
     return;
@@ -39,21 +29,11 @@ const isFollowExistsForAdding = async (req: Request, res: Response, next: NextFu
  const isFollowExistsForRemoving = async (req: Request, res: Response, next: NextFunction) => {
     const followerId = (req.session.userId as string) ?? '';
     const followedId = await UserCollection.findOneByUsername(req.body.username);
-
-    if (Object.is(followedId, null)) {
-      res.status(404).json({
-          error: {
-            userNotFound: 'User does not exist.'
-          }
-        });
-        return;
-    }
-
     const follow = await FollowCollection.findOneByIds(followerId, followedId._id);
     if (!follow) {
       res.status(409).json({
         error: {
-          followNotFound: 'You are not following this user.'
+          followNotFound: `You are not following this user ${req.body.username as string}.`
         }
       });
       return;

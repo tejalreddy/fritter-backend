@@ -9,6 +9,8 @@ type FreetResponse = {
   dateCreated: string;
   content: string;
   dateModified: string;
+  categories: string[];
+  numLikes: string;
 };
 
 /**
@@ -32,14 +34,19 @@ const constructFreetResponse = (freet: HydratedDocument<Freet>): FreetResponse =
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
+
+  const numLikes = freet.numLikes ? freetCopy.numLikes.toString() : '0';
   const {username} = freetCopy.authorId;
+  const categories = (freetCopy.categories ?? []).map(category => category as unknown as string);
   delete freetCopy.authorId;
   return {
     ...freetCopy,
     _id: freetCopy._id.toString(),
     author: username,
     dateCreated: formatDate(freet.dateCreated),
-    dateModified: formatDate(freet.dateModified)
+    dateModified: formatDate(freet.dateModified),
+    categories,
+    numLikes
   };
 };
 
